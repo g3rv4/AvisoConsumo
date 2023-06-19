@@ -1,0 +1,12 @@
+.vscode/
+bin/
+obj/
+.vs/
+*.csproj.user
+launchSettings.json
+.idea/
+data/
+.DS_Store
+.build/
+node_modules/
+state.json
