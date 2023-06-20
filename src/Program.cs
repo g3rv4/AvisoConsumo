@@ -210,6 +210,8 @@ catch (Exception e)
     {
         Console.WriteLine("Could not post message to telegram, got " + r.StatusCode);
     }
+
+    throw;
 }
 
 public class TelegramMessage
