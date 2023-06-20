@@ -115,7 +115,7 @@ do
                     historyOfNotifications = JsonSerializer.Deserialize<Dictionary<DateTime, HashSet<string>>>(fileContentstate);
                     alreadyNotified =
                         new HashSet<string>(
-                            historyOfNotifications.Where(n => n.Key >= DateTime.UtcNow.Date).SelectMany(n => n.Value),
+                            historyOfNotifications.SelectMany(n => n.Value),
                             StringComparer.OrdinalIgnoreCase);
                 }
 
