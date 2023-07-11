@@ -16,6 +16,7 @@ var telegramClient = new HttpClient()
 client.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:109.0) Gecko/20100101 Firefox/114.0");
 
 var numberRegex = new Regex("[0-9]", RegexOptions.Compiled);
+var endsInColonRegex = new Regex("[a-z]:$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 try
 {
     do
@@ -138,7 +139,7 @@ try
                         var desc = movementDetails.ChildNodes
                             .Where(n => n.NodeType == HtmlNodeType.Text && !string.IsNullOrWhiteSpace(n.InnerText))
                             .Select(n => n.InnerText.Trim())
-                            .Where(n => !n.EndsWith(":"))
+                            .Where(n => !endsInColonRegex.IsMatch(n))
                             .Aggregate((a, b) => a + "\n" + b);
 
                         var monto = string.Join(" - ", movement.SelectNodes(".//strong[@class='monto_movimiento']")
