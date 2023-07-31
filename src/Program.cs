@@ -3,7 +3,8 @@ using System.Text.Json;
 using System.Text.RegularExpressions;
 using HtmlAgilityPack;
 
-var handler = new HttpClientHandler() { UseCookies = true };
+var healthChecksClient = new HttpClient { BaseAddress = new Uri("https://hc-ping.com/"), Timeout = TimeSpan.FromSeconds(10) };
+var handler = new HttpClientHandler { UseCookies = true };
 var client = new HttpClient(handler)
 {
     BaseAddress = new Uri("https://brou.e-sistarbanc.com.uy/")
@@ -185,6 +186,15 @@ try
                             JsonSerializer.Serialize(historyOfNotifications));
                     }
                 }
+            }
+
+            try
+            {
+                await healthChecksClient.GetAsync("ef58ef4e-9ed7-4b69-ae75-701714d5e7ee");
+            }
+            catch
+            {
+                // ignore it, it will trigger an alert if it doesn't get pinged
             }
 
             Console.WriteLine("Waiting 120s...");
