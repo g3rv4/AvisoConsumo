@@ -216,10 +216,18 @@ catch (Exception e)
     
     var json = JsonSerializer.Serialize(msg);
     var data = new StringContent(json, Encoding.UTF8, "application/json");
-    var r = await telegramClient.PostAsync("sendMessage", data);
-    if (!r.IsSuccessStatusCode)
+    try
     {
-        Console.WriteLine("Could not post message to telegram, got " + r.StatusCode);
+        var r = await telegramClient.PostAsync("sendMessage", data);
+        if (!r.IsSuccessStatusCode)
+        {
+            Console.WriteLine("Could not post message to telegram, got " + r.StatusCode);
+        }
+    }
+    catch (Exception e2)
+    {
+        Console.WriteLine($"Exception while trying to send message to telegram: {e2.Message}");
+        Console.WriteLine("Was trying to post: " + msg.text);
     }
 
     throw;
