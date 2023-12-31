@@ -8,4 +8,4 @@ RUN dotnet publish -c Release /src/AvisoConsumo.csproj -o /app
 FROM mcr.microsoft.com/dotnet/aspnet:8.0.0-bookworm-slim-${ARCH}
 VOLUME ["/data"]
 COPY --from=builder /app /app
-ENTRYPOINT [ "/app/AvisoConsumo" ]
+ENTRYPOINT [ "dotnet" "/app/AvisoConsumo.dll" ]
