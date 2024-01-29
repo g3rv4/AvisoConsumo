@@ -6,6 +6,6 @@ COPY src /src/
 RUN dotnet publish -c Release /src/AvisoConsumo.csproj -o /app
 
 FROM mcr.microsoft.com/dotnet/aspnet:8.0.0-alpine3.18-${ARCH}
-VOLUME ["/data"]
+WORKDIR /app
 COPY --from=builder /app /app
-CMD /usr/bin/dotnet /app/AvisoConsumo.dll
+CMD /usr/bin/dotnet AvisoConsumo.dll
