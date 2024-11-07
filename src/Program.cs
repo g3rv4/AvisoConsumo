@@ -21,7 +21,7 @@ var endsInColonRegex = new Regex("[a-z]:$", RegexOptions.Compiled | RegexOptions
 do
 {
     Console.WriteLine("Getting the token to log in...");
-    var r = await client.GetAsync("login/");
+    var r = await client.GetAsync("");
     var content = await r.Content.ReadAsStringAsync();
 
     var doc = new HtmlDocument();
