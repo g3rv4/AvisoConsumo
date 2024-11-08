@@ -1,10 +1,24 @@
-﻿using System.Text;
+﻿using System.Net;
+using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using HtmlAgilityPack;
 
-var healthChecksClient = new HttpClient { BaseAddress = new Uri("https://hc-ping.com/"), Timeout = TimeSpan.FromSeconds(10) };
-var handler = new HttpClientHandler { UseCookies = true };
+var healthChecksClient = new HttpClient
+    { BaseAddress = new Uri("https://hc-ping.com/"), Timeout = TimeSpan.FromSeconds(10) };
+
+var proxy = new WebProxy()
+{
+    Address = new Uri(Environment.GetEnvironmentVariable("PROXY_ADDRESS")),
+    BypassProxyOnLocal = false,
+    Credentials = new NetworkCredential(Environment.GetEnvironmentVariable("PROXY_USERNAME"),
+        Environment.GetEnvironmentVariable("PROXY_PASSWORD"))
+};
+var handler = new HttpClientHandler
+{
+    UseCookies = true, Proxy = proxy,
+    UseProxy = true
+};
 var client = new HttpClient(handler)
 {
     BaseAddress = new Uri("https://brou.e-sistarbanc.com.uy/")
@@ -14,7 +28,8 @@ var telegramClient = new HttpClient()
     BaseAddress =
         new Uri($"https://api.telegram.org/bot{Environment.GetEnvironmentVariable("TELEGRAM_BOT_KEY")}/")
 };
-client.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:109.0) Gecko/20100101 Firefox/114.0");
+client.DefaultRequestHeaders.Add("User-Agent",
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:109.0) Gecko/20100101 Firefox/114.0");
 
 var numberRegex = new Regex("[0-9]", RegexOptions.Compiled);
 var endsInColonRegex = new Regex("[a-z]:$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
