@@ -225,11 +225,11 @@ do
 
             Console.WriteLine("Waiting 120s...");
             await Task.Delay(120000);
+            remainingRetries = 5;
         }
 
         Console.WriteLine("Waiting 10s...");
         await Task.Delay(10000);
-        remainingRetries = 5;
     } catch (Exception e)
     {
         Console.WriteLine("Error: " + e.Message);
