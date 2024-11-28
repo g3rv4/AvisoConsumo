@@ -238,6 +238,7 @@ do
         {
             break;
         }
+        
         Console.WriteLine($"Retrying in 1 minute... ({remainingRetries} retries left)");
         await Task.Delay(60000);
     }
