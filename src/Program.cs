@@ -61,8 +61,7 @@ do
 
         if (tks == null)
         {
-            Console.WriteLine("Could not find tks");
-            break;
+            throw new Exception("Could not find tks");
         }
 
         var tksValue = tks.First().Attributes["value"].Value;
@@ -91,8 +90,7 @@ do
 
             if (messages.Length > 0)
             {
-                Console.WriteLine("Could not login. Message: " + messages[0]);
-                break;
+                throw new Exception("Could not login. Message: " + messages[0]);
             }
         }
 
@@ -112,8 +110,7 @@ do
         var p3 = doc.DocumentNode.SelectNodes("//input[@name='p3']");
         if (p3 == null)
         {
-            Console.WriteLine("Could not find p3");
-            break;
+            throw new Exception("Could not find p3");
         }
 
         var p3Value = p3.First().Attributes["value"].Value;
@@ -241,8 +238,8 @@ do
         {
             break;
         }
-        Console.WriteLine("Retrying in 10s...");
-        await Task.Delay(10000);
+        Console.WriteLine($"Retrying in 1 minute... ({remainingRetries} retries left)");
+        await Task.Delay(60000);
     }
 } while (true);
 
