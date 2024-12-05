@@ -43,7 +43,7 @@ var telegramClient = new HttpClient()
 
 var numberRegex = new Regex("[0-9]", RegexOptions.Compiled);
 var endsInColonRegex = new Regex("[a-z]:$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-var remainingRetries = 5;
+var remainingRetries = 6;
 var minutesDelay = 1;
 do
 {
@@ -226,7 +226,7 @@ do
 
             Console.WriteLine("Waiting 120s...");
             await Task.Delay(120000);
-            remainingRetries = 5;
+            remainingRetries = 6;
             minutesDelay = 1;
         }
 
